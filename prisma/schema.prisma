@@ -25,4 +25,18 @@ model User {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+   // Refresh token
+  refreshToken RefreshToken[]
+}
+
+model RefreshToken {
+  id    String @id @default(auto()) @map("_id") @db.ObjectId
+  token String @unique
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  userId String @db.ObjectId
+  user   User   @relation(fields: [userId], references: [id])
 }

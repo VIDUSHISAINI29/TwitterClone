@@ -1,11 +1,14 @@
 <script setup>
+import { onMounted, onBeforeMount } from "vue";
 const darkMode = ref(false);
 import SidebarLeft from "./components/Sidebar/Left/Index.vue"
 import SidebarRight from "./components/Sidebar/Right/Index.vue"
-// const { useAuthUser, initAuth, useAuthLoading, logout } = useAuth()
-// const isAuthLoading = useAuthLoading()
+import AuthPage from "./components/Auth/Page.vue"
+import useAuth from "./composables/useAuth.js"
+const { useAuthUser, initAuth, useAuthLoading } = useAuth()
+const isAuthLoading = useAuthLoading()
 // const { closePostTweetModal, usePostTweetModal, openPostTweetModal, useReplyTweet } = useTweets()
-// const user = useAuthUser()
+const user = useAuthUser()
 
 // const postTweetModal = usePostTweetModal()
 // const emitter = useEmitter()
@@ -19,9 +22,9 @@ import SidebarRight from "./components/Sidebar/Right/Index.vue"
 //   darkMode.value = !darkMode.value
 // })
 
-// onBeforeMount(() => {
-//   initAuth()
-// })
+onBeforeMount(() => {
+  initAuth()
+})
 
 // function handleFormSuccess(tweet) {
 //   closePostTweetModal()
@@ -49,10 +52,10 @@ import SidebarRight from "./components/Sidebar/Right/Index.vue"
   <div :class="{ 'dark': darkMode }">
       <div class="bg-white dark:bg-dim-900">
 
-          <!-- <LoadingPage v-if="isAuthLoading" /> -->
+          <LoadingPage v-if="isAuthLoading" />
 
           <!-- App -->
-          <div  clas="min-h-full">
+          <div v-else-if="user"  clas="min-h-full">
 
               <div class="grid grid-cols-12 mx-auto sm:px-6 lg:max-w-7xl lg:px-8 lg:gap-5">
 
@@ -81,10 +84,10 @@ import SidebarRight from "./components/Sidebar/Right/Index.vue"
 
           </div>
 
-          <!-- <AuthPage />
+          <AuthPage v-else />
 
 
-          <UIModal :isOpen="postTweetModal" @on-close="handleModalClose">
+          <!-- <UIModal :isOpen="postTweetModal" @on-close="handleModalClose">
               <TweetForm :replyTo="replyTweet" showReply :user="user" @onSuccess="handleFormSuccess" />
           </UIModal> -->
 

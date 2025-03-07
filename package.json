@@ -12,9 +12,11 @@
   "dependencies": {
     "@heroicons/vue": "^1.0.6",
     "@prisma/client": "^6.4.1",
+    "@tailwindcss/forms": "^0.5.10",
     "bcrypt": "^5.1.1",
     "jsonwebtoken": "^9.0.2",
     "nuxt": "^3.15.4",
+    "url-pattern": "^1.0.3",
     "vue": "^3.5.13",
     "vue-router": "^4.5.0"
   },
