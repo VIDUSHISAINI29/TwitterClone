@@ -16,12 +16,13 @@ async function handleLogin() {
             username: data.username,
             password: data.password
         })
+        console.log("login clicked ")
     } catch (error) {
         console.log(error)
     } finally {
         data.loading = false
     }
-    console.log("vidushi is ")
+   
 
 }
 

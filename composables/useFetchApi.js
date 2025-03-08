@@ -1,11 +1,12 @@
-// import useAuth from "../composables/useAuth.js"
-// const {useAuthToken} = useAuth() 
+import useAuth from "./useAuth.js";
+
 export default (url, options = {}) => {
+    const { useAuthToken } = useAuth(); // Call useAuth() first
     return $fetch(url, {
         ...options,
         headers: {
             ...options.headers,
             Authorization: `Bearer ${useAuthToken().value}`
         }
-    })
-}
+    });
+};

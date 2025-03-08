@@ -1,15 +1,15 @@
 <script setup>
 import MainSection from "../components/MainSection.vue"
-
+// import useAuth from "./"
 const { twitterBorderColor } = useTailwindConfig()
 const loading = ref(false)
 
 // const { getTweets } = useTweets()
 
 // const homeTweets = ref([])
-// const { useAuthUser } = useAuth()
+const { useAuthUser } = useAuth()
 
-// const user = useAuthUser()
+const user = useAuthUser()
 
 // onBeforeMount(async () => {
 //     loading.value = true
@@ -38,6 +38,7 @@ const loading = ref(false)
 
             <Head>
                 <Title>Home / Twitter</Title>
+                {{user}}
             </Head>
 
             <!-- <div class="border-b" :class="twitterBorderColor">

@@ -25,13 +25,15 @@ console.log("ref = ", refreshToken);
     }
 
     const token = decodeRefreshToken(refreshToken)
-
+console.log("decoded token ")
     try {
         const user = await getUserById(token.userId)
 
         const { accessToken } = generateTokens(user)
 
         return { access_token: accessToken }
+        console.log("comp token");
+        
 
     } catch (error) {
         return sendError(event, createError({

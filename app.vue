@@ -7,6 +7,7 @@ import AuthPage from "./components/Auth/Page.vue"
 import useAuth from "./composables/useAuth.js"
 const { useAuthUser, initAuth, useAuthLoading } = useAuth()
 const isAuthLoading = useAuthLoading()
+
 // const { closePostTweetModal, usePostTweetModal, openPostTweetModal, useReplyTweet } = useTweets()
 const user = useAuthUser()
 
@@ -22,8 +23,8 @@ const user = useAuthUser()
 //   darkMode.value = !darkMode.value
 // })
 
-onBeforeMount(() => {
-  initAuth()
+onMounted(() => {
+    initAuth()
 })
 
 // function handleFormSuccess(tweet) {
