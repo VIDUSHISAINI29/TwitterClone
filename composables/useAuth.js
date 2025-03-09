@@ -1,5 +1,5 @@
 import useFetchApi from "../composables/useFetchApi.js"
-// import jwt_decode from "jwt-decode"
+import { jwtDecode } from "jwt-decode"
 export default () => {
     const useAuthToken = () => useState('auth_token');
     const useAuthUser = () => useState('auth_user');
@@ -61,22 +61,23 @@ export default () => {
         })
     }
 
-    // const reRefreshAccessToken = () => {
-    //     const authToken = useAuthToken()
+    const reRefreshAccessToken = () => {
+        const authToken = useAuthToken()
 
-    //     if (!authToken.value) {
-    //         return
-    //     }
+        if (!authToken.value) {
+            return
+        }
 
-    //     const jwt = jwt_decode(authToken.value)
+        const jwt = jwtDecode(authToken.value)
 
-    //     const newRefreshTime = jwt.exp - 60000
+        console.log(jwt)
+        const newRefreshTime = jwt.exp - 60000
 
-    //     setTimeout(async () => {
-    //         await refreshToken()
-    //         reRefreshAccessToken()
-    //     }, newRefreshTime);
-    // }
+        setTimeout(async () => {
+            await refreshToken()
+            reRefreshAccessToken()
+        }, newRefreshTime);
+    }
     const initAuth = () => {
         alert("jad")
         setIsAuthLoading(true)
@@ -85,7 +86,7 @@ export default () => {
                 await refreshToken()
                 await getUser()
 
-                //  reRefreshAccessToken()
+                 reRefreshAccessToken()
 
                 resolve(true)
             } catch (error) {

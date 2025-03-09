@@ -20,7 +20,8 @@ export default defineEventHandler(async (event) => {
         email,
         name,
         password,
-        profileImage : "Vidushi's Photo Url"
+        profileImage
+       
     }
     const user = await createUser(userData)
     return{

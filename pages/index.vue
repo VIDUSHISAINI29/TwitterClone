@@ -1,6 +1,7 @@
 <script setup>
+import useTailwindConfig from "../composables/useTailwindConfig.js"
 import MainSection from "../components/MainSection.vue"
-// import useAuth from "./"
+import TweetForm from "../components/Tweet/Form/Index.vue"
 const { twitterBorderColor } = useTailwindConfig()
 const loading = ref(false)
 
@@ -24,11 +25,11 @@ const user = useAuthUser()
 //     }
 // })
 
-// function handleFormSuccess(tweet) {
-//     navigateTo({
-//         path: `/status/${tweet.id}`
-//     })
-// }
+function handleFormSuccess(tweet) {
+    navigateTo({
+        path: `/status/${tweet.id}`
+    })
+}
 
 </script>
 
@@ -38,14 +39,15 @@ const user = useAuthUser()
 
             <Head>
                 <Title>Home / Twitter</Title>
-                {{user}}
+           
             </Head>
 
-            <!-- <div class="border-b" :class="twitterBorderColor">
+             <div class="border-b" :class="twitterBorderColor">
+                {{ user }}
                 <TweetForm :user="user" @on-success="handleFormSuccess" />
             </div>
 
-            <TweetListFeed :tweets="homeTweets" /> -->
+            <!-- <TweetListFeed :tweets="homeTweets" /> -->
 
         </MainSection>
     </div>
