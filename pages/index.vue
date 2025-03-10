@@ -2,28 +2,30 @@
 import useTailwindConfig from "../composables/useTailwindConfig.js"
 import MainSection from "../components/MainSection.vue"
 import TweetForm from "../components/Tweet/Form/Index.vue"
+import TweetListFeed from "../components/Tweet/ListFeed.vue"
+import useTweets from "../composables/useTweets.js"
 const { twitterBorderColor } = useTailwindConfig()
 const loading = ref(false)
 
-// const { getTweets } = useTweets()
+const { getHomeTweets } = useTweets()
 
-// const homeTweets = ref([])
+const homeTweets = ref([])
 const { useAuthUser } = useAuth()
 
 const user = useAuthUser()
 
-// onBeforeMount(async () => {
-//     loading.value = true
-//     try {
-//         const { tweets } = await getTweets()
+onBeforeMount(async () => {
+    loading.value = true
+    try {
+        const { tweets } = await getHomeTweets()
 
-//         homeTweets.value = tweets
-//     } catch (error) {
-//         console.log(error)
-//     } finally {
-//         loading.value = false
-//     }
-// })
+        homeTweets.value = tweets
+    } catch (error) {
+        console.log(error)
+    } finally {
+        loading.value = false
+    }
+})
 
 function handleFormSuccess(tweet) {
     navigateTo({
@@ -47,7 +49,7 @@ function handleFormSuccess(tweet) {
                 <TweetForm :user="user" @on-success="handleFormSuccess" />
             </div>
 
-            <!-- <TweetListFeed :tweets="homeTweets" /> -->
+            <TweetListFeed :tweets="homeTweets" />
 
         </MainSection>
     </div>

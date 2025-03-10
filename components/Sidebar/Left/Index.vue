@@ -6,14 +6,14 @@ import LogoTwitter from "../../Logo/Twitter.vue"
 import { HashtagIcon, BellIcon, InboxIcon, BookmarkIcon, DocumentTextIcon, UserIcon, DotsCircleHorizontalIcon, PencilIcon, ChevronDownIcon } from "@heroicons/vue/outline"
 
 const { defaultTransition } = useTailwindConfig()
-// const emits = defineEmits(['onTweet', 'onLogout'])
+const emits = defineEmits(['onTweet', 'onLogout'])
 
-// const props = defineProps({
-//     user: {
-//         type: Object,
-//         required: true
-//     }
-// })
+const props = defineProps({
+    user: {
+        type: Object,
+        required: true
+    }
+})
 
 </script>
 
@@ -107,21 +107,21 @@ const { defaultTransition } = useTailwindConfig()
                 </template>
             </SidebarLeftTab>
 
-            <!-- <div class="hidden xl:block">
+             <div class="hidden xl:block">
                 <UIButton liquid size="lg" @on-click="emits('onTweet')">
                     <span class="font-bold">
                         Tweet
                     </span>
                 </UIButton>
-            </div> -->
+            </div> 
 
-            <!-- <div class="block xl:hidden">
+            <div class="block xl:hidden">
                 <UIButton @on-click="emits('onTweet')">
                     <div class="w-6 h-6 font-bold">
                         <PencilIcon />
                     </div>
                 </UIButton>
-            </div> -->
+            </div>
 
         </div>
 

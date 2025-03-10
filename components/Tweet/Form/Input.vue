@@ -1,8 +1,7 @@
 
 <script setup>
-import useTailwindConfig from "../../../composables/useTailwindConfig.js"
 const { twitterBorderColor } = useTailwindConfig()
-import UIButton from "../../UI/Button.vue"
+
 const imageInput = ref()
 const selectedFile = ref(null)
 const inputImageUrl = ref(null)
@@ -48,7 +47,6 @@ function handleImageChange(event) {
     reader.readAsDataURL(file)
 
 }
-console.log('input de vich usaer = ', props.user)
 
 </script>
 <template>
@@ -68,12 +66,12 @@ console.log('input de vich usaer = ', props.user)
 
         <!-- File Selector -->
 
-        <div class="p-4 w-20 pl-16">
+        <div class="p-4 pl-16">
 
-            <img :src="inputImageUrl" v-if="inputImageUrl" alt="" class="border rounded-2xl"
+            <img :src="inputImageUrl" v-if="inputImageUrl" alt="" class="border  rounded-2xl"
                 :class="twitterBorderColor">
 
-            <input type="file" ref="imageInput" hidden accept=" image/gif, image/jpeg"
+            <input type="file" ref="imageInput" hidden accept="image/png, image/gif, image/jpeg"
                 @change="handleImageChange">
 
         </div>
@@ -81,7 +79,7 @@ console.log('input de vich usaer = ', props.user)
         <!-- Icons -->
         <div class="flex p-2 pl-14">
             <div class="flex w-full text-white">
-                <div class="p-2 w-10 text-blue-400 rounded-full cursor-pointer hover:bg-blue-50 dark:hover:bg-dim-800"
+                <div class="p-2 text-blue-400 rounded-full cursor-pointer hover:bg-blue-50 dark:hover:bg-dim-800"
                     @click="handleImageClick">
                     <svg viewBox="0 0 24 24" class="w-5 h-5" fill="currentColor">
                         <g>
@@ -93,8 +91,7 @@ console.log('input de vich usaer = ', props.user)
                     </svg>
                 </div>
 
-                <div class="p-2 text-blue-400 w-10 rounded-full cursor-pointer hover:bg-blue-50 dark:hover:bg-dim-800">
-                    
+                <div class="p-2 text-blue-400 rounded-full cursor-pointer hover:bg-blue-50 dark:hover:bg-dim-800">
                     <svg viewBox="0 0 24 24" class="w-5 h-5" fill="currentColor">
                         <g>
                             <path
@@ -107,7 +104,7 @@ console.log('input de vich usaer = ', props.user)
                     </svg>
                 </div>
 
-                <div class="p-2 text-blue-400 w-10 rounded-full cursor-pointer hover:bg-blue-50 dark:hover:bg-dim-800">
+                <div class="p-2 text-blue-400 rounded-full cursor-pointer hover:bg-blue-50 dark:hover:bg-dim-800">
                     <svg viewBox="0 0 24 24" class="w-5 h-5" fill="currentColor">
                         <g>
                             <path
@@ -117,7 +114,7 @@ console.log('input de vich usaer = ', props.user)
                     </svg>
                 </div>
 
-                <div class="p-2 w-10 text-blue-400 rounded-full cursor-pointer hover:bg-blue-50 dark:hover:bg-dim-800">
+                <div class="p-2 text-blue-400 rounded-full cursor-pointer hover:bg-blue-50 dark:hover:bg-dim-800">
                     <svg viewBox="0 0 24 24" class="w-5 h-5" fill="currentColor">
                         <g>
                             <path
@@ -132,7 +129,7 @@ console.log('input de vich usaer = ', props.user)
                     </svg>
                 </div>
 
-                <div class="p-2 w-10 text-blue-400 rounded-full cursor-pointer hover:bg-blue-50 dark:hover:bg-dim-800">
+                <div class="p-2 text-blue-400 rounded-full cursor-pointer hover:bg-blue-50 dark:hover:bg-dim-800">
                     <svg viewBox="0 0 24 24" class="w-5 h-5" fill="currentColor">
                         <g>
                             <path d="M-37.9 18c-.1-.1-.1-.1-.1-.2.1 0 .1.1.1.2z"></path>

@@ -79,7 +79,7 @@ export default () => {
         }, newRefreshTime);
     }
     const initAuth = () => {
-        alert("jad")
+        // alert("jad")
         setIsAuthLoading(true)
         return new Promise(async(resolve, reject) => {
             try {

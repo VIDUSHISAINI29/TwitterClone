@@ -10,7 +10,22 @@ export default () => {
             body: form
         })
     }
+    const getHomeTweets = () => {
+        return new Promise((resolve, reject) => {
+            try {
+                const response = useFetchApi('/api/user/tweets', {
+                    method: 'GET',
+                })
+                resolve(response)
+                // console.log('respors gethometweets =',response);
+                
+            } catch (error) {
+                reject(error)
+            }
+        })
+    }
     return {
-        postTweet
+        postTweet,
+        getHomeTweets
     }
 }
