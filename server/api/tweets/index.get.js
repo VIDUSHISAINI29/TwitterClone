@@ -1,8 +1,21 @@
 import { getTweets } from "~~/server/db/tweets"
 import { tweetTransformer } from "~~/server/transformers/tweet"
-import {getQuery} from "h3"
+import {sendError, getQuery} from "h3"
+
 export default defineEventHandler(async (event) => {
-    const { query } = getQuery(event)
+    console.log("Full Query Params: ", getQuery(event)); // ✅ Log everything
+
+    const { query } = getQuery(event) || {}; // Fallback to empty object
+
+    console.log("Extracted query: ", query); // ✅ Log extracted query
+
+    
+    if(!query){
+    return sendError(event, createError({
+        statusCode: 401,
+        statusMessage: "no queSry there"
+    }))
+}
 
     let primsaQuery = {
         include: {
@@ -26,12 +39,12 @@ export default defineEventHandler(async (event) => {
         ]
     }
 
-    if (!!query) {
+    if (query) {
         primsaQuery = {
             ...primsaQuery,
             where: {
                 text: {
-                    contains: query
+                    contains: "twweet"
                 }
             }
         }
@@ -42,5 +55,6 @@ export default defineEventHandler(async (event) => {
 
     return {
         tweets: tweets.map(tweetTransformer)
+        // tweets:  "twer"
     }
 })

@@ -52,7 +52,8 @@ console.log('resp = ',response);
     await Promise.all(filePromises)
     
     return{
-        tweet: tweetTransformer(tweet) 
+        // tweet: tweetTransformer(tweet) 
+        tweet: tweet
         // twwet: tweetData
         // files: files
     }
