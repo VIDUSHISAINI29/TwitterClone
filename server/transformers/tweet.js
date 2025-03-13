@@ -3,6 +3,12 @@ import { userTransformer } from "./user"
 import human from "human-time"
 
 export const tweetTransformer = (tweet) => {
+    // if(!!tweet.mediaFiles){
+    //     console.log("media = ", tweet.mediaFiles);
+    // }
+    // if(!!tweet.author){
+    //     console.log("author = ", tweet.author);
+    // }
     
     return {
         id: tweet.id,
@@ -12,7 +18,6 @@ export const tweetTransformer = (tweet) => {
         replies: !!tweet.replies ? tweet.replies.map(tweetTransformer) : [],
         replyTo: !!tweet.replyTo ? tweetTransformer(tweet.replyTo) : null,
         repliesCount: !!tweet.replies ? tweet.replies.length : 0,
-        postedAtHuman: human(tweet.createdAt),
-        check: tweet
+        postedAtHuman: human(tweet.createdAt)
     }
 }

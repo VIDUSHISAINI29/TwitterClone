@@ -4,7 +4,7 @@
         <div>
             <img class="w-10 h-10 rounded-full" :src="author.profileImage" alt="">
         </div>
-
+<h1>{{props.tweet.replyTo}}</h1>
         <div class="ml-3">
             <span class="font-medium text-gray-800 dark:text-white">{{ author.name }}</span>
 

@@ -12,6 +12,7 @@ const props = defineProps({
 const isEmptyArray = computed(() => props.tweets.length === 0)
 
 function redirect(tweet) {
+    console.log("sts id = ", tweet.id)
     navigateTo(`/status/${tweet.id}`)
 }
 
@@ -25,11 +26,12 @@ function redirect(tweet) {
                 No tweets 😢
             </p>
         </div>
+    
         <div v-else class="pb-4 border-b cursor-pointer hover:bg-gray-100 dark:hover:bg-dim-300"
             :class="[twitterBorderColor, defaultTransition]" v-for="tweet in props.tweets" :key="tweet.id"
             @click.native="redirect(tweet)">
             <TweetItem :tweet="tweet" compact />
         </div>
-
+      
     </div>
 </template>

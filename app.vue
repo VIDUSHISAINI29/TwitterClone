@@ -27,13 +27,13 @@ onMounted(() => {
     initAuth()
 })
 
-// function handleFormSuccess(tweet) {
-//   closePostTweetModal()
+function handleFormSuccess(tweet) {
+  closePostTweetModal()
 
-//   navigateTo({
-//       path: `/status/${tweet.id}`
-//   })
-// }
+  navigateTo({
+      path: `/status/${tweet.id}`
+  })
+}
 
 // function handleModalClose() {
 //   closePostTweetModal()
@@ -88,9 +88,9 @@ onMounted(() => {
           <AuthPage v-else />
 
 
-          <!-- <UIModal :isOpen="postTweetModal" @on-close="handleModalClose">
+          <UIModal :isOpen="postTweetModal" @on-close="handleModalClose">
               <TweetForm :replyTo="replyTweet" showReply :user="user" @onSuccess="handleFormSuccess" />
-          </UIModal> -->
+          </UIModal>
 
       </div>
 

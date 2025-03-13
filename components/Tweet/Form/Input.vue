@@ -43,7 +43,7 @@ function handleImageChange(event) {
     reader.onload = (event) => {
         inputImageUrl.value = event.target.result
     }
-
+console.log("img done upload")
     reader.readAsDataURL(file)
 
 }

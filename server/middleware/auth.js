@@ -8,8 +8,8 @@ export default defineEventHandler(async (event) => {
         '/api/auth/user',
         '/api/user/tweets',
         '/api/tweets',
-        // '/api/tweets/:id'
-    ]
+        '/api/tweets/:id'
+    ] 
 
     const isHandledByThisMiddleware = endpoints.some(endopoint => {
         const pattern = new UrlPattern(endopoint)

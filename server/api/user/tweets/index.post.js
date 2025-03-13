@@ -21,7 +21,7 @@ export default defineEventHandler(async (event) => {
     const {fields, files} = response
 
     const userId = event.context?.auth?.user?.id
-console.log('he = ',typeof(fields.text[0]))
+// console.log('he = ',typeof(fields.text[0]))
     const tweetData = {
         text: fields.text[0],
         authorId : userId
@@ -29,10 +29,8 @@ console.log('he = ',typeof(fields.text[0]))
 
     const replyTo = fields.replyTo
 
-    if(replyTo && replyTo !== 'null'){
-        tweetData.replyToId = replyTo
-    }
-
+   
+console.log('repliese = ', replyTo)
     const tweet = await createTweet(tweetData)
 
     const filePromises = Object.keys(files).map(async key => {
@@ -40,8 +38,14 @@ console.log('he = ',typeof(fields.text[0]))
         // console.log("file = ",file[0].filepath);
         
         const cloudinaryResource = await uploadToCloudinary(file[0].filepath)
-console.log('resp = ',response);
+// console.log('resp = ',response);
 
+        // return createMediaFile({
+        //     url: ' ',
+        //     providerPublicId: 'cloudinaryResource.public_id',
+        //     userId: userId,
+        //     tweetId: tweet.id
+        // })
         return createMediaFile({
             url: cloudinaryResource.secure_url,
             providerPublicId: cloudinaryResource.public_id,
@@ -49,12 +53,19 @@ console.log('resp = ',response);
             tweetId: tweet.id
         })
     })
-    await Promise.all(filePromises)
-    
+    const finalResult = await Promise.all(filePromises)
+    if(replyTo && replyTo !== 'null'){
+        tweetData.replyToId = replyTo
+    }
+    tweet.mediaFiles = finalResult
+    tweet.author = event.context?.auth?.user
     return{
-        // tweet: tweetTransformer(tweet) 
-        tweet: tweet
-        // twwet: tweetData
-        // files: files
+        
+        tweet: tweetTransformer(tweet)
+          
+        // tweet: userId
+        // twwet: tweet
+        // twwet: finalResult
+                // files: files
     }
 })
