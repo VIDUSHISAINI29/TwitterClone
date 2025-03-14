@@ -1,5 +1,6 @@
 <template>
     <div>
+       
         <TweetItemHeader :tweet="props.tweet" />
         <div :class="tweetBodyWrapper">
             <p class="flex-shrink w-auto font-medium text-gray-800 dark:text-white" :class="textSize">
@@ -22,6 +23,7 @@
 <script setup>
 import TweetItemActions from "../Item/Actions/Index.vue"
 import useEmitter from "../../../composables/useEmitter.js"
+import useTailwindConfig from "../../../composables/useTailwindConfig.js"
 import TweetItemHeader from './Header.vue'
 const { twitterBorderColor } = useTailwindConfig()
 

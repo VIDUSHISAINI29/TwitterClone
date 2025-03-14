@@ -48,7 +48,7 @@ function handleFormSuccess(tweet) {
                 {{ user }}
                 <TweetForm :user="user" @on-success="handleFormSuccess" />
             </div>
-
+<!-- {{ homeTweets[1] }} -->
             <TweetListFeed :tweets="homeTweets" />
 
         </MainSection>

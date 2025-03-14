@@ -1,5 +1,6 @@
 <script setup>
 import TweetItem from "./Item/Index.vue"
+import useTailwindConfig from "../../composables/useTailwindConfig.js"
 const { twitterBorderColor, defaultTransition } = useTailwindConfig()
 
 const props = defineProps({
@@ -30,6 +31,7 @@ function redirect(tweet) {
         <div v-else class="pb-4 border-b cursor-pointer hover:bg-gray-100 dark:hover:bg-dim-300"
             :class="[twitterBorderColor, defaultTransition]" v-for="tweet in props.tweets" :key="tweet.id"
             @click.native="redirect(tweet)">
+            
             <TweetItem :tweet="tweet" compact />
         </div>
       

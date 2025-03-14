@@ -1,6 +1,7 @@
 <script setup>
 import UISpinner from "../../UI/Spinner.vue"
 import TweetFormInput from "./Input.vue"
+import TweetItem from "../Item/Index.vue"
 import useTweets from "../../../composables/useTweets.js"
 const emits = defineEmits(['onSuccess'])
 const loading = ref(false)
@@ -41,8 +42,8 @@ async function handleFormSubmit(data) {
         loading.value = false
     }
 }
-console.log("props. user = ", props.user)
-{/* <TweetItem :tweet="props.replyTo" v-if="props.replyTo && props.showReply" hideActions /> */}
+console.log("props. user = ", props.replyTo)
+
 
 </script>
 <template>
@@ -52,7 +53,7 @@ console.log("props. user = ", props.user)
             <UISpinner />
         </div>
         <div v-else>
-
+            <TweetItem :tweet="props.replyTo" v-if="props.replyTo && props.showReply" hideActions />
             <TweetFormInput :placeholder="props.placeholder" :user="props.user" @onSubmit="handleFormSubmit" />
         </div>
 

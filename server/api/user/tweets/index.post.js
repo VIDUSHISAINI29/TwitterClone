@@ -27,10 +27,13 @@ export default defineEventHandler(async (event) => {
         authorId : userId
     }
 
+    
+    
     const replyTo = fields.replyTo
-
-   
-console.log('repliese = ', replyTo)
+    if(replyTo && replyTo !== 'null'){
+        tweetData.replyToId = replyTo
+    }
+    console.log('repliese = ', replyTo)
     const tweet = await createTweet(tweetData)
 
     const filePromises = Object.keys(files).map(async key => {
@@ -54,11 +57,8 @@ console.log('repliese = ', replyTo)
         })
     })
     const finalResult = await Promise.all(filePromises)
-    if(replyTo && replyTo !== 'null'){
-        tweetData.replyToId = replyTo
-    }
-    tweet.mediaFiles = finalResult
-    tweet.author = event.context?.auth?.user
+   
+    
     return{
         
         tweet: tweetTransformer(tweet)
