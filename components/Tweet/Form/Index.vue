@@ -32,9 +32,9 @@ async function handleFormSubmit(data) {
         const response = await postTweet({
             text: data.text,
             mediaFiles: data.mediaFiles,
-            replyTo: props.replyTo?.id
+            replyTo: data.id
         })
-
+props.replyTo = data.id
         emits('onSuccess', response.tweet)
     } catch (error) {
         console.log(error)
@@ -54,7 +54,7 @@ console.log("props. user = ", props.replyTo)
         </div>
         <div v-else>
             <TweetItem :tweet="props.replyTo" v-if="props.replyTo && props.showReply" hideActions />
-            <TweetFormInput :placeholder="props.placeholder" :user="props.user" @onSubmit="handleFormSubmit" />
+            <TweetFormInput :placeholder="props.placeholder" :user="props.user" @onSubmit="handleFormSubmit(props.user)" />
         </div>
 
     </div>

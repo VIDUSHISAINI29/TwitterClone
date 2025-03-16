@@ -88,9 +88,7 @@ function handleFormSuccess(tweet) {
           <AuthPage v-else />
 
 
-          <UIModal :isOpen="postTweetModal" @on-close="handleModalClose">
-              <TweetForm :replyTo="replyTweet" showReply :user="user" @onSuccess="handleFormSuccess" />
-          </UIModal>
+          
 
       </div>
 

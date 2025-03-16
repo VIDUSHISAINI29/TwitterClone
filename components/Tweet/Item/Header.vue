@@ -16,7 +16,7 @@
             </span>
             <h1>{{props.tweet.replyTo}}</h1>
 
-{{ props.tweet }}
+            
             <p v-if="props.tweet.replyTo" class="text-sm">
                 <span class="text-gray-500">
                     Replying to

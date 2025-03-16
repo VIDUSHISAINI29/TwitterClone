@@ -45,7 +45,7 @@ function handleFormSuccess(tweet) {
             </Head>
 
              <div class="border-b" :class="twitterBorderColor">
-                {{ user }}
+              
                 <TweetForm :user="user" @on-success="handleFormSuccess" />
             </div>
 <!-- {{ homeTweets[1] }} -->

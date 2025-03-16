@@ -1,46 +1,109 @@
-<template>
-    <div class="flex p-4">
-
-        <div>
-            <img class="w-10 h-10 rounded-full" :src="author.profileImage" alt="">
-        </div>
-        <div class="ml-3">
-            <span class="font-medium text-gray-800 dark:text-white">{{ author.name }}</span>
-
-
-            <span class="ml-3 text-sm font-medium text-gray-400">
-                <nuxt-link to="#">
-                    {{ author.handle }}
-                </nuxt-link>
-                . {{ props.tweet.postedAtHuman }}
-            </span>
-            <h1>{{props.tweet.replyTo}}</h1>
-
-{{ props.tweet }}
-            <p v-if="props.tweet.replyTo" class="text-sm">
-                <span class="text-gray-500">
-                    Replying to
-                </span>
-
-                <nuxt-link :to="replyToTweetUrl" class="text-blue-400">
-                    {{ props.tweet.replyTo.author.handle }}
-                </nuxt-link>
-            </p>
-
-        </div>
-
-
-    </div>
-
-</template>
-<script setup>
-const props = defineProps({
-    tweet: {
-        type: Object,
-        required: true
+import useFetchApi from "../composables/useFetchApi.js"
+import { jwtDecode } from "jwt-decode"
+export default () => {
+    const useAuthToken = () => useState('auth_token');
+    const useAuthUser = () => useState('auth_user');
+    const useAuthLoading = () => useState('auth_laoding',() => true);
+    
+    const setToken = (newToken) => {
+        const authToken = useAuthToken()
+        authToken.value = newToken
     }
-})
+    const setUser = (newToken) => {
+        const authUser = useAuthUser()
+        authUser.value = newToken 
+    }
+    const setIsAuthLoading = (newValue) => {
+        const authLoading = useAuthLoading()
+        authLoading.value = newValue
+    }
+    const login = ({username, password}) => {
+        return new Promise(async(resolve, reject) => {
+            try {
+                const {data} = await $fetch('/api/auth/login', {
+                    method: 'POST',
+                    body: {
+                        username, password
+                    }
+                })
+                setToken(data.access_token)
+                setUser(data.user)
+                resolve(true)
+            } catch (error) {
+                
+            }
+        })
+    }
 
-const author = props.tweet.author
-const replyToTweetUrl = computed(() => `/status/${props.tweet?.replyTo?.id}`)
-</script>
+    const refreshToken = () => {
+        return new Promise (async (resolve, reject) => {
+            try {
+                const data = await $fetch('/api/auth/refresh', {
+                    method: "GET",
+                    credentials: "include", 
+                });
+                setToken(data.access_token)
+                resolve(true)
+            } catch (error) {
+                reject(error)
+            }
+        })
+    }
+    const getUser = () => {
+        return new Promise (async (resolve, reject) => {
+            try {
+                const data = await useFetchApi('/api/auth/user');
+                setUser(data.user)
+                resolve(true)
+            } catch (error) {
+                reject(error)
+            }
+        })
+    }
+
+    const reRefreshAccessToken = () => {
+        const authToken = useAuthToken()
+
+        if (!authToken.value) {
+            return
+        }
+
+        const jwt = jwtDecode(authToken.value)
+
+        console.log(jwt)
+        const newRefreshTime = jwt.exp - 60000
+
+        setTimeout(async () => {
+            await refreshToken()
+            reRefreshAccessToken()
+        }, newRefreshTime);
+    }
+    const initAuth = () => {
+        // alert("jad")
+        setIsAuthLoading(true)
+        return new Promise(async(resolve, reject) => {
+            try {
+                await refreshToken()
+                await getUser()
+
+                 reRefreshAccessToken()
+
+                resolve(true)
+            } catch (error) {
+                reject(error)
+            }
+            finally{
+                setIsAuthLoading(false)
+
+            }
+        })
+    }
+ 
+    return {
+        login,
+        useAuthToken,
+        useAuthUser,
+        initAuth,
+        useAuthLoading
+    }
+}
