@@ -1,6 +1,21 @@
+<template>
+    <div>
+
+        <div v-if="isEmptyArray" class="p-4">
+            <p class="text-center text-gray-500">
+                No tweets 😢
+            </p>
+        </div>
+        <div v-else class="pb-4 border-b cursor-pointer hover:bg-gray-100 dark:hover:bg-dim-300"
+            :class="[twitterBorderColor, defaultTransition]" v-for="tweet in props.tweets" :key="tweet.id"
+            @click.native="redirect(tweet)">
+           
+            <TweetItem :tweet="tweet" compact />
+        </div>
+
+    </div>
+</template>
 <script setup>
-import TweetItem from "./Item/Index.vue"
-import useTailwindConfig from "../../composables/useTailwindConfig.js"
 const { twitterBorderColor, defaultTransition } = useTailwindConfig()
 
 const props = defineProps({
@@ -13,27 +28,7 @@ const props = defineProps({
 const isEmptyArray = computed(() => props.tweets.length === 0)
 
 function redirect(tweet) {
-    console.log("sts id = ", tweet.id)
     navigateTo(`/status/${tweet.id}`)
 }
 
 </script>
-
-<template>
-    <div>
-
-        <div v-if="isEmptyArray" class="p-4">
-            <p class="text-center text-gray-500">
-                No tweets 😢
-            </p>
-        </div>
-    
-        <div v-else class="pb-4 border-b cursor-pointer hover:bg-gray-100 dark:hover:bg-dim-300"
-            :class="[twitterBorderColor, defaultTransition]" v-for="tweet in props.tweets" :key="tweet.id"
-            @click.native="redirect(tweet)">
-            
-            <TweetItem :tweet="tweet" compact />
-        </div>
-      
-    </div>
-</template>

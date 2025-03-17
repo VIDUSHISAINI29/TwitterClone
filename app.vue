@@ -1,27 +1,38 @@
 <script setup>
 import { onMounted, onBeforeMount } from "vue";
 const darkMode = ref(false);
+import TweetForm from "./components/Tweet/Form/Index.vue"
+import UIModal from "./components/UI/Modal.vue"
 import SidebarLeft from "./components/Sidebar/Left/Index.vue"
 import SidebarRight from "./components/Sidebar/Right/Index.vue"
 import AuthPage from "./components/Auth/Page.vue"
 import useAuth from "./composables/useAuth.js"
+import useTweets from "./composables/useTweets.js"
+import {
+    TransitionRoot,
+    TransitionChild,
+    Dialog,
+    DialogPanel,
+} from '@headlessui/vue'
 const { useAuthUser, initAuth, useAuthLoading } = useAuth()
 const isAuthLoading = useAuthLoading()
 
-// const { closePostTweetModal, usePostTweetModal, openPostTweetModal, useReplyTweet } = useTweets()
+const { closePostTweetModal, usePostTweetModal, openPostTweetModal, useReplyTweet } = useTweets()
 const user = useAuthUser()
 
-// const postTweetModal = usePostTweetModal()
-// const emitter = useEmitter()
-// const replyTweet = useReplyTweet()
+const postTweetModal = usePostTweetModal()
+const emitter = useEmitter()
+const replyTweet = useReplyTweet()
 
-// emitter.$on('replyTweet', (tweet) => {
-//   openPostTweetModal(tweet)
-// })
+emitter.$on('replyTweet', (tweet) => {
+  openPostTweetModal(tweet)
+})
 
-// emitter.$on('toggleDarkMode', () => {
-//   darkMode.value = !darkMode.value
-// })
+emitter.$on('toggleDarkMode', () => {
+  darkMode.value = !darkMode.value
+})
+
+
 
 onMounted(() => {
     initAuth()
@@ -35,13 +46,13 @@ function handleFormSuccess(tweet) {
   })
 }
 
-// function handleModalClose() {
-//   closePostTweetModal()
-// }
+function handleModalClose() {
+  closePostTweetModal()
+}
 
-// function handleOpenTweetModal() {
-//   openPostTweetModal(null)
-// }
+function handleOpenTweetModal() {
+  openPostTweetModal()
+}
 
 // function handleUserLogout() {
 //   logout()
@@ -63,7 +74,7 @@ function handleFormSuccess(tweet) {
                   <!-- Left sidebar -->
                   <div class="hidden md:block xs-col-span-1 xl:col-span-2">
                       <div class="sticky top-0">
-                          <SidebarLeft />
+                          <SidebarLeft @on-tweet="handleOpenTweetModal" />
                       </div>
                   </div>
 
@@ -88,7 +99,9 @@ function handleFormSuccess(tweet) {
           <AuthPage v-else />
 
 
-          
+          <UIModal :isOpen="postTweetModal" @on-close="handleModalClose">
+                <TweetForm :replyTo="replyTweet" showReply :user="user" @onSuccess="handleFormSuccess" />
+            </UIModal>
 
       </div>
 

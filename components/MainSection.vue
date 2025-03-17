@@ -1,19 +1,3 @@
-<script setup>
-import UISpinner from "../components/UI/Spinner.vue"
-const { twitterBorderColor } = useTailwindConfig()
-const props = defineProps({
-    title: {
-        type: String,
-        required: true
-    },
-    loading: {
-        type: Boolean,
-        required: true
-    }
-})
-
-</script>
-
 <template>
     <div class="border-x" :class="twitterBorderColor">
         <div class="sticky top-0 px-4 py-3 bg-white/80 backdrop-blur-md dark:bg-dim-900/80">
@@ -28,3 +12,19 @@ const props = defineProps({
         </div>
     </div>
 </template>
+<script setup>
+import useTailwindConfig from "../composables/useTailwindConfig.js"
+const { twitterBorderColor } = useTailwindConfig()
+
+const props = defineProps({
+    title: {
+        type: String,
+        required: true
+    },
+    loading: {
+        type: Boolean,
+        required: true
+    }
+})
+
+</script>

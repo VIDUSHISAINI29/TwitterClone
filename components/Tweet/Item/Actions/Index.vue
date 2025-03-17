@@ -1,31 +1,3 @@
-<script setup>
-import TweetItemActionsIcon from "./Icon.vue"
-import { ChatIcon, RefreshIcon, HeartIcon, UploadIcon } from '@heroicons/vue/outline';
-
-const emits = defineEmits(['onCommentClick'])
-
-
-const props = defineProps({
-    tweet: {
-        type: Object,
-        required: true
-    },
-    compact: {
-        type: Boolean,
-        default: false
-    }
-})
-
-const showStats = computed(() => props.compact)
-const size = computed(() => props.compact ? 5 : 8)
-
-function generateRandomNumber() {
-    return Math.floor(Math.random() * 100)
-}
-
-
-</script>
-
 <template>
     <div class="flex items-center justify-around w-full">
 
@@ -37,6 +9,7 @@ function generateRandomNumber() {
 
             <template v-if="showStats" v-slot:default>
                 {{ props.tweet.repliesCount }}
+                
             </template>
 
         </TweetItemActionsIcon>
@@ -80,3 +53,29 @@ function generateRandomNumber() {
 
     </div>
 </template>
+<script setup>
+import { ChatIcon, RefreshIcon, HeartIcon, UploadIcon } from '@heroicons/vue/outline';
+
+const emits = defineEmits(['onCommentClick'])
+
+
+const props = defineProps({
+    tweet: {
+        type: Object,
+        required: true
+    },
+    compact: {
+        type: Boolean,
+        default: false
+    }
+})
+
+const showStats = computed(() => props.compact)
+const size = computed(() => props.compact ? 5 : 8)
+
+function generateRandomNumber() {
+    return Math.floor(Math.random() * 100)
+}
+
+
+</script>

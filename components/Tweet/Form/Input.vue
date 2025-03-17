@@ -1,54 +1,3 @@
-
-<script setup>
-const { twitterBorderColor } = useTailwindConfig()
-
-const imageInput = ref()
-const selectedFile = ref(null)
-const inputImageUrl = ref(null)
-const text = ref('')
-
-const emits = defineEmits(['onSubmit'])
-
-const isDisabled = computed(() => text.value === '')
-
-const props = defineProps({
-    user: {
-        type: Object,
-        required: true
-    },
-    placeholder: {
-        type: String,
-        required: true
-    }
-})
-
-function handleFormSubmit() {
-    emits('onSubmit', {
-        text: text.value,
-        mediaFiles: [selectedFile.value]
-    })
-}
-
-function handleImageClick() {
-    imageInput.value.click()
-}
-
-function handleImageChange(event) {
-    const file = event.target.files[0]
-
-    selectedFile.value = file
-
-    const reader = new FileReader()
-
-    reader.onload = (event) => {
-        inputImageUrl.value = event.target.result
-    }
-console.log("img done upload")
-    reader.readAsDataURL(file)
-
-}
-
-</script>
 <template>
     <div>
         <div class="flex items-center flex-shrink-0 p-4 pb-0">
@@ -68,7 +17,7 @@ console.log("img done upload")
 
         <div class="p-4 pl-16">
 
-            <img :src="inputImageUrl" v-if="inputImageUrl" alt="" class="border  rounded-2xl"
+            <img :src="inputImageUrl" v-if="inputImageUrl" alt="" class="border rounded-2xl"
                 :class="twitterBorderColor">
 
             <input type="file" ref="imageInput" hidden accept="image/png, image/gif, image/jpeg"
@@ -161,3 +110,54 @@ console.log("img done upload")
 
     </div>
 </template>
+<script setup>
+import useTailwindConfig from "../../../composables/useTailwindConfig.js"
+const { twitterBorderColor } = useTailwindConfig()
+
+const imageInput = ref()
+const selectedFile = ref(null)
+const inputImageUrl = ref(null)
+const text = ref('')
+
+const emits = defineEmits(['onSubmit'])
+
+const isDisabled = computed(() => text.value === '')
+
+const props = defineProps({
+    user: {
+        type: Object,
+        required: true
+    },
+    placeholder: {
+        type: String,
+        required: true
+    }
+})
+
+function handleFormSubmit() {
+    emits('onSubmit', {
+        text: text.value,
+        mediaFiles: [selectedFile.value]
+    })
+}
+
+function handleImageClick() {
+    imageInput.value.click()
+}
+
+function handleImageChange(event) {
+    const file = event.target.files[0]
+
+    selectedFile.value = file
+
+    const reader = new FileReader()
+
+    reader.onload = (event) => {
+        inputImageUrl.value = event.target.result
+    }
+
+    reader.readAsDataURL(file)
+
+}
+
+</script>

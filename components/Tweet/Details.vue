@@ -9,9 +9,6 @@
     </div>
 </template>
 <script setup>
-import TweetListFeed from "./ListFeed.vue"
-import TweetForm from "./Form/Index.vue"
-import TweetItem from "./Item/Index.vue"
 const props = defineProps({
     tweet: {
         type: Object,
@@ -24,7 +21,7 @@ const props = defineProps({
 })
 
 const replies = computed(() => props.tweet?.replies || [])
-console.log('replies inside details page',replies.value)
+
 function handleFormSuccess(tweet) {
     navigateTo({
         path: `/status/${tweet.id}`

@@ -1,27 +1,50 @@
-import useFetchApi from "./useFetchApi.js"
-
 export default () => {
+
+    const usePostTweetModal = () => useState('post_tweet_modal', () => false)
+    const useReplyTweet = () => useState('reply_tweet', () => null)
+
+    const closePostTweetModal = () => {
+        const postTweetModal = usePostTweetModal()
+        postTweetModal.value = false
+    }
+
+    const setReplyTo = (tweet) => {
+        const replyTweet = useReplyTweet()
+        replyTweet.value = tweet
+    }
+
+    const openPostTweetModal = (tweet = null) => {
+        const postTweetModal = usePostTweetModal()
+        postTweetModal.value = true
+
+        setReplyTo(tweet)
+    }
+
     const postTweet = (formData) => {
         const form = new FormData()
 
         form.append('text', formData.text)
+        form.append('replyTo', formData.replyTo)
+
         formData.mediaFiles.forEach((mediaFile, index) => {
             form.append('media_file_' + index, mediaFile)
         })
-        return useFetchApi('/api/user/tweets',{
+
+        return useFetchApi('/api/user/tweets', {
             method: 'POST',
             body: form
         })
     }
-    const getHomeTweets = () => {
-        return new Promise((resolve, reject) => {
+
+    const getTweets = (params = {}) => {
+        return new Promise(async (resolve, reject) => {
             try {
-                const response = useFetchApi('/api/tweets', {
+                const response = await useFetchApi('/api/tweets', {
                     method: 'GET',
+                    params
                 })
+
                 resolve(response)
-                // console.log('respors gethometweets =',response);
-                
             } catch (error) {
                 reject(error)
             }
@@ -32,7 +55,6 @@ export default () => {
         return new Promise(async (resolve, reject) => {
             try {
                 const response = await useFetchApi(`/api/tweets/${tweetId}`)
-console.log("res inside useTweet composable = ", response);
 
                 resolve(response)
             } catch (error) {
@@ -40,9 +62,14 @@ console.log("res inside useTweet composable = ", response);
             }
         })
     }
+
     return {
         postTweet,
-        getHomeTweets,
-        getTweetById
+        getTweets,
+        getTweetById,
+        closePostTweetModal,
+        usePostTweetModal,
+        openPostTweetModal,
+        useReplyTweet
     }
 }

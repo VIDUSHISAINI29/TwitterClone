@@ -4,6 +4,7 @@
         <div>
             <img class="w-10 h-10 rounded-full" :src="author.profileImage" alt="">
         </div>
+
         <div class="ml-3">
             <span class="font-medium text-gray-800 dark:text-white">{{ author.name }}</span>
 
@@ -14,9 +15,8 @@
                 </nuxt-link>
                 . {{ props.tweet.postedAtHuman }}
             </span>
-            <h1>{{props.tweet.replyTo}}</h1>
 
-            
+
             <p v-if="props.tweet.replyTo" class="text-sm">
                 <span class="text-gray-500">
                     Replying to
