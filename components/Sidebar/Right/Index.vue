@@ -82,11 +82,12 @@
 </template>
 <script setup>
 import { SearchIcon } from '@heroicons/vue/outline';
+import useEmitter from "../../../composables/useEmitter.js"
 const search = ref('')
 const emitter = useEmitter()
 
 function handleSearch() {
-    alert("search")
+    // alert("search")
     useRouter().push({
         path: '/search',
         query: {
@@ -128,8 +129,8 @@ const whoToFollowItems = ref([
     }
 ])
 
-// function handleToggleDarkMode() {
-//     emitter.$emit('toggleDarkMode')
-// }
+function handleToggleDarkMode() {
+    emitter.$emit('toggleDarkMode')
+}
 
 </script>

@@ -4,7 +4,7 @@ export default () => {
     const useAuthToken = () => useState('auth_token');
     const useAuthUser = () => useState('auth_user');
     const useAuthLoading = () => useState('auth_laoding',() => true);
-    
+        
     const setToken = (newToken) => {
         const authToken = useAuthToken()
         authToken.value = newToken
@@ -17,24 +17,7 @@ export default () => {
         const authLoading = useAuthLoading()
         authLoading.value = newValue
     }
-    const login = ({username, password}) => {
-        return new Promise(async(resolve, reject) => {
-            try {
-                const {data} = await $fetch('/api/auth/login', {
-                    method: 'POST',
-                    body: {
-                        username, password
-                    }
-                })
-                setToken(data.access_token)
-                setUser(data.user)
-                resolve(true)
-            } catch (error) {
-                
-            }
-        })
-    }
-
+    
     const refreshToken = () => {
         return new Promise (async (resolve, reject) => {
             try {
@@ -83,11 +66,11 @@ export default () => {
         setIsAuthLoading(true)
         return new Promise(async(resolve, reject) => {
             try {
-                await refreshToken()
-                await getUser()
+              
+            await refreshToken()
+            await getUser()
 
-                 reRefreshAccessToken()
-
+             reRefreshAccessToken()
                 resolve(true)
             } catch (error) {
                 reject(error)
@@ -98,12 +81,51 @@ export default () => {
             }
         })
     }
- 
+    const logout = () => {
+        return new Promise(async (resolve, reject) => {
+            try {
+                await useFetchApi('/api/auth/logout', {
+                    method: 'POST'
+                })
+
+                setToken(null)
+                setUser(null)
+                resolve()
+            } catch (error) {
+                reject(error)
+            }
+        })
+    }
+
+    const login = ({username, password}) => {
+        return new Promise(async(resolve, reject) => {
+            try {
+                const {data} = await $fetch('/api/auth/login', {
+                    method: 'POST',
+                    body: {
+                        username, password
+                    }
+                })
+                setToken(data.access_token)
+                setUser(data.user)
+                resolve(true)
+                await refreshToken()
+            await getUser()
+
+             reRefreshAccessToken()
+            } catch (error) {
+                
+            }
+        })
+    }
+
+
     return {
         login,
         useAuthToken,
         useAuthUser,
         initAuth,
-        useAuthLoading
+        useAuthLoading,
+        logout
     }
 }

@@ -14,7 +14,7 @@ import {
     Dialog,
     DialogPanel,
 } from '@headlessui/vue'
-const { useAuthUser, initAuth, useAuthLoading } = useAuth()
+const { useAuthUser, initAuth, useAuthLoading, logout } = useAuth()
 const isAuthLoading = useAuthLoading()
 
 const { closePostTweetModal, usePostTweetModal, openPostTweetModal, useReplyTweet } = useTweets()
@@ -34,7 +34,7 @@ emitter.$on('toggleDarkMode', () => {
 
 
 
-onMounted(() => {
+onBeforeMount(() => {
     initAuth()
 })
 
@@ -54,9 +54,9 @@ function handleOpenTweetModal() {
   openPostTweetModal()
 }
 
-// function handleUserLogout() {
-//   logout()
-// }
+function handleUserLogout() {
+  logout()
+}
 
 </script>
 
@@ -74,7 +74,7 @@ function handleOpenTweetModal() {
                   <!-- Left sidebar -->
                   <div class="hidden md:block xs-col-span-1 xl:col-span-2">
                       <div class="sticky top-0">
-                          <SidebarLeft @on-tweet="handleOpenTweetModal" />
+                        <SidebarLeft :user="user" @on-tweet="handleOpenTweetModal" @on-logout="handleUserLogout" />
                       </div>
                   </div>
 

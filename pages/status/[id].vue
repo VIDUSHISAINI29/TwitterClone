@@ -13,7 +13,8 @@
     </div>
 </template>
 <script setup>
-
+import useTweets from "../../composables/useTweets.js"
+import useAuth from "../../composables/useAuth.js"
 const loading = ref(false)
 const tweet = ref(null)
 const { getTweetById } = useTweets()

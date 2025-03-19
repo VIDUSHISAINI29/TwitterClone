@@ -23,7 +23,7 @@ export default defineEventHandler(async (event) => {
         profileImage
        
     }
-    console.log("register")
+ 
     const user = await createUser(userData)
     return{
         body: user

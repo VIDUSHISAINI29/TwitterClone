@@ -1,21 +1,9 @@
 import { getTweets } from "~~/server/db/tweets"
 import { tweetTransformer } from "~~/server/transformers/tweet"
-import {sendError, getQuery} from "h3"
+import {getQuery} from "h3"
 
 export default defineEventHandler(async (event) => {
-//     console.log("Full Query Params: ", getQuery(event)); // ✅ Log everything
-
-    const { query } = getQuery(event) || {}; // Fallback to empty object
-
-    console.log("Extracted query: ", query); // ✅ Log extracted query
-
-    
-//     if(!query){
-//     return sendError(event, createError({
-//         statusCode: 401,
-//         statusMessage: "no queSry there"
-//     }))
-// }
+    const { query } = getQuery(event)
 
     let primsaQuery = {
         include: {
@@ -39,23 +27,23 @@ export default defineEventHandler(async (event) => {
         ]
     }
 
-    // if (!!query) {
-    //     primsaQuery = {
-    //         ...primsaQuery,
-    //         where: {
-    //             text: {
-    //                 contains: query
-    //             }
-    //         }
-    //     }
-    // }
+    if (!!query) {
+        
+        primsaQuery = {
+            ...primsaQuery,
+            where: {
+                text: {
+                    contains: query
+                }
+            }
+        }
+    }
 
     const tweets = await getTweets(primsaQuery)
 
 
     return {
-        // tweets: tweets.map(tweetTransformer) // Apply transformer to each tweet
-        query
-    };
-    
+        tweets: tweets.map(tweetTransformer),
+        query:primsaQuery
+    }
 })

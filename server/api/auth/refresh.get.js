@@ -6,7 +6,7 @@ import { ref } from "vue";
 
 export default defineEventHandler(async (event) => {
     const refreshToken = getCookie(event, "refresh_token")
-console.log("ref = ", refreshToken);
+// console.log("ref = ", refreshToken);
 
     if (!refreshToken) {
         return sendError(event, createError({
