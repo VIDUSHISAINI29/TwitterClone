@@ -8,6 +8,13 @@ export default defineNuxtConfig({
     transpile: ['@heroicons/vue']
   },
  
+  nitro: {
+    preset: 'node-server',
+    externals: {
+      inline: ['@prisma/client']
+    }
+  },
+ 
   runtimeConfig: {
     jwtAccessSecret: process.env.JWT_ACCESS_SECRET_KEY,
     jwtRefreshSecret: process.env.JWT_REFRESH_SECRET_KEY,
